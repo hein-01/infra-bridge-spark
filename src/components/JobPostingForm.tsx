@@ -307,24 +307,6 @@ const JobPostingForm = ({ onSuccess }: JobPostingFormProps) => {
 
         <FormField
           control={form.control}
-          name="jobDescription"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Job Description *</FormLabel>
-              <FormControl>
-                <Textarea 
-                  placeholder="Describe the job responsibilities, requirements, etc."
-                  className="min-h-[120px]"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
           name="salaryType"
           render={({ field }) => (
             <FormItem>
@@ -628,6 +610,24 @@ const JobPostingForm = ({ onSuccess }: JobPostingFormProps) => {
               <FormDescription>
                 Enter your number starting with 09 (without country code)
               </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="jobDescription"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Job Description *</FormLabel>
+              <FormControl>
+                <Textarea 
+                  placeholder="Describe the job responsibilities, requirements, etc."
+                  className="min-h-[120px]"
+                  {...field}
+                />
+              </FormControl>
               <FormMessage />
             </FormItem>
           )}
