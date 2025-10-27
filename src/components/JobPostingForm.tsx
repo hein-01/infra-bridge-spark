@@ -626,7 +626,13 @@ const JobPostingForm = ({ onSuccess }: JobPostingFormProps) => {
               <FormLabel>Job Description *</FormLabel>
               <FormControl>
                 <Textarea 
-                  placeholder="Describe the job responsibilities, requirements, etc."
+                  placeholder="Please write the job description responsibly. As a platform, we provide these suggestions and facts to help you. You are free to decide what you think is most suited, knowing that it can have a significant impact on all fellow humans, just like you, and your society as a whole. Here are some suggestions: 
+
+Please do not add discriminatory text (e.g., 'good-looking person'). Stating a preference for a 'good-looking person' or any other subjective physical trait (e.g., 'slim,' 'strong build,' 'tall') is discriminatory. It links a person's value to their appearance, not their ability. This practice is illegal in many regions. Instead of: 'Looking for a presentable (good-looking) receptionist.' Kindly say: 'Must have excellent communication skills and a professional, welcoming demeanor.' 
+
+Please try not to use phrases like 'Chinese preferred,' 'Muslim only,' or 'Females Only.' In Singapore, for example, it is not allowed (and illegal) to mention such specific religion, race, or gender in a job description. Such specificities are only allowed if it is a Genuine Occupational Requirement (GOR). Example (Gender GOR): 'Female therapist required for female spa' or 'Male nurse needed for a men's-only ward.' Example (Religion GOR): 'Hindu priest required to perform wedding ceremonies' or 'Halal-certified butcher needed for a mosque's kitchen.' 
+
+In SG, it's also illegal to describe stereotypes (e.g., 'females preferred for admin roles,' 'males preferred for security,' or 'Christian accountant needed') in job descriptions. Please Be Careful: 'Reverse Discrimination' is Still Discrimination. Sometimes, in an effort to promote gender equity, an employer might overcorrect and post a job like 'only female candidates for this accounting role' or 'we are only hiring women for this position.' This is still discrimination. Excluding a qualified man because he is a man is just as illegal and unfair as excluding a qualified woman. The goal of equality is not to reverse the discrimination; it's to remove it entirely. This is often seen as a more severe form of discrimination because it is done consciously. The best, safest, and fairest strategy is to be truly blind to gender. Evaluate every applicant—male or female—based on their skills, experience, and suitability for the role. The best person for the job should get it."
                   className="min-h-[120px]"
                   {...field}
                 />
