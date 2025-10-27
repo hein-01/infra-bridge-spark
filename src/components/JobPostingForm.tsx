@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -82,6 +82,9 @@ const formSchema = z.object({
   }),
   viberNumber: z.string()
     .regex(/^09\d{7,9}$/, "Viber number must start with 09 and be valid"),
+  verification: z.string()
+    .regex(/^\d+$/, "Please enter only digits")
+    .min(1, "Verification answer is required"),
 }).refine((data) => {
   if (data.ageRequirement === "custom") {
     return data.ageFrom !== undefined && data.ageTo !== undefined && data.ageFrom <= data.ageTo;
@@ -130,6 +133,14 @@ const JobPostingForm = ({ onSuccess }: JobPostingFormProps) => {
   const [showCustomEducation, setShowCustomEducation] = useState(false);
   const [locations, setLocations] = useState<string[]>([]);
   
+  // Generate random numbers for verification (only once on mount)
+  const verificationNumbers = useMemo(() => ({
+    num1: Math.floor(Math.random() * 10),
+    num2: Math.floor(Math.random() * 10)
+  }), []);
+  
+  const correctAnswer = verificationNumbers.num1 + verificationNumbers.num2;
+  
   const maxDate = new Date();
   maxDate.setDate(maxDate.getDate() + 60);
 
@@ -175,12 +186,24 @@ const JobPostingForm = ({ onSuccess }: JobPostingFormProps) => {
       educationRequirement: "",
       benefits: [],
       viberNumber: "",
+      verification: "",
       customJobTitle: "",
       customEducationRequirement: "",
     },
   });
 
   const onSubmit = (data: FormValues) => {
+    // Server-side verification check
+    const userAnswer = parseInt(data.verification);
+    if (userAnswer !== correctAnswer) {
+      toast({
+        title: "Verification Failed",
+        description: "Please enter the correct answer to the math question.",
+        variant: "destructive",
+      });
+      return;
+    }
+    
     console.log("Job posting data:", data);
     toast({
       title: "Job Posted Successfully!",
@@ -613,6 +636,27 @@ const JobPostingForm = ({ onSuccess }: JobPostingFormProps) => {
               <FormDescription>
                 Enter your number starting with 09 (without country code)
               </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="verification"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Verification: What is {verificationNumbers.num1} + {verificationNumbers.num2}? *</FormLabel>
+              <FormControl>
+                <Input
+                  type="text"
+                  inputMode="numeric"
+                  pattern="[0-9]*"
+                  placeholder="Enter your answer"
+                  maxLength={2}
+                  {...field}
+                />
+              </FormControl>
               <FormMessage />
             </FormItem>
           )}
