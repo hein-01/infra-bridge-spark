@@ -71,7 +71,9 @@ const formSchema = z.object({
   salary: z.string()
     .min(1, "Salary amount is required")
     .regex(/^\d+$/, "Please enter only digits (no currency symbols or spaces)"),
-  ageRequirement: z.enum(["any", "18-60"]),
+  ageRequirement: z.enum(["any", "18-60", "custom"]),
+  ageFrom: z.number().min(18).max(100).optional(),
+  ageTo: z.number().min(18).max(100).optional(),
   educationRequirement: z.string().min(1, "Please select an education requirement"),
   customEducationRequirement: z.string().optional(),
   benefits: z.array(z.string()).default([]),
@@ -80,6 +82,14 @@ const formSchema = z.object({
   }),
   viberNumber: z.string()
     .regex(/^09\d{7,9}$/, "Viber number must start with 09 and be valid"),
+}).refine((data) => {
+  if (data.ageRequirement === "custom") {
+    return data.ageFrom !== undefined && data.ageTo !== undefined && data.ageFrom <= data.ageTo;
+  }
+  return true;
+}, {
+  message: "Invalid age range. 'From' age must be less than or equal to 'To' age",
+  path: ["ageTo"],
 }).refine((data) => {
   if (data.jobTitle === "Custom") {
     return data.customJobTitle && data.customJobTitle.trim().length >= 3;
@@ -115,6 +125,7 @@ interface JobPostingFormProps {
 }
 
 const JobPostingForm = ({ onSuccess }: JobPostingFormProps) => {
+  const [showCustomAge, setShowCustomAge] = useState(false);
   const [showCustomJobTitle, setShowCustomJobTitle] = useState(false);
   const [showCustomEducation, setShowCustomEducation] = useState(false);
   const [locations, setLocations] = useState<string[]>([]);
@@ -348,7 +359,10 @@ const JobPostingForm = ({ onSuccess }: JobPostingFormProps) => {
               </FormDescription>
               <FormControl>
                 <RadioGroup
-                  onValueChange={field.onChange}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                    setShowCustomAge(value === "custom");
+                  }}
                   defaultValue={field.value}
                   className="flex flex-col space-y-1"
                 >
@@ -368,12 +382,65 @@ const JobPostingForm = ({ onSuccess }: JobPostingFormProps) => {
                       18-60
                     </FormLabel>
                   </FormItem>
+                  <FormItem className="flex items-center space-x-3 space-y-0">
+                    <FormControl>
+                      <RadioGroupItem value="custom" />
+                    </FormControl>
+                    <FormLabel className="font-normal cursor-pointer">
+                      Custom
+                    </FormLabel>
+                  </FormItem>
                 </RadioGroup>
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
+
+        {showCustomAge && (
+          <div className="grid grid-cols-2 gap-4 pl-6">
+            <FormField
+              control={form.control}
+              name="ageFrom"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>From *</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="number"
+                      min={18}
+                      max={100}
+                      placeholder="18"
+                      {...field}
+                      onChange={(e) => field.onChange(parseInt(e.target.value) || undefined)}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="ageTo"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>To *</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="number"
+                      min={18}
+                      max={100}
+                      placeholder="100"
+                      {...field}
+                      onChange={(e) => field.onChange(parseInt(e.target.value) || undefined)}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+        )}
 
         <FormField
           control={form.control}
