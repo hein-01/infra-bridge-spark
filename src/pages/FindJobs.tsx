@@ -361,28 +361,31 @@ const FindJobs = () => {
   // No multi-select; using single merged selectedFilter
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       <Navbar />
       <main className="pt-16 pb-8">
         {/* Banner Section */}
         <div 
-          className="relative h-[300px] md:h-[400px] bg-cover bg-center flex items-center justify-center"
+          className="relative h-[350px] md:h-[450px] bg-cover bg-center flex items-center justify-center overflow-hidden"
           style={{ backgroundImage: `url(${jobBannerBg})` }}
         >
-          {/* Overlay */}
-          <div className="absolute inset-0 bg-black/50" />
+          {/* Overlay with gradient */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/70" />
           
           {/* Content */}
-          <div className="relative z-10 text-center px-4">
-            <h2 className="text-2xl md:text-4xl font-bold text-white mb-4 animate-fade-in">
-              Listing your job for free, click here
-            </h2>
+          <div className="relative z-10 text-center px-4 animate-fade-in">
+            <h1 className="text-3xl md:text-5xl font-bold text-white mb-3 drop-shadow-lg">
+              Find Your Dream Job
+            </h1>
+            <p className="text-base md:text-xl text-white/90 mb-6 max-w-2xl mx-auto drop-shadow-md">
+              Listing your job for free - Connect with talented candidates today
+            </p>
             <Button 
               size="lg"
               onClick={() => navigate("/post-a-job")}
-              className="text-lg px-8 py-6 hover-scale"
+              className="text-base md:text-lg px-8 py-6 hover-scale shadow-lg bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg"
             >
-              Post a job FREE
+              Post a Job FREE
             </Button>
           </div>
         </div>
@@ -392,8 +395,9 @@ const FindJobs = () => {
           <div className="max-w-6xl mx-auto">
             
             {/* Filters Section: Merged dropdown and slider; auto-query on change */}
-            <div className="mb-8 p-4 md:p-6 border rounded-lg bg-white shadow-sm">
-              <div className="flex flex-col md:flex-row md:items-start gap-4">
+            <div className="mb-8 p-6 md:p-8 border rounded-xl bg-white shadow-md hover:shadow-lg transition-shadow duration-300 animate-fade-in">
+              <h2 className="text-xl md:text-2xl font-bold text-foreground mb-6">Filter Jobs</h2>
+              <div className="flex flex-col md:flex-row md:items-start gap-6">
                 {/* Merged Dropdown */}
                 <div className="flex-1 md:flex-1">
                   <Select
@@ -403,12 +407,19 @@ const FindJobs = () => {
                     }}
                     value={selectedFilter?.queryKey}
                   >
-                    <SelectTrigger ref={triggerRef} className="w-full md:w-full md:rounded-r-none justify-between">
+                    <SelectTrigger 
+                      ref={triggerRef} 
+                      className="w-full border-2 border-gray-200 hover:border-primary/50 transition-colors duration-200 h-12 text-base rounded-lg"
+                    >
                       <SelectValue placeholder="အလုပ်များအားလုံး" />
                     </SelectTrigger>
-                    <SelectContent className="bg-background z-50 max-h-80 overflow-auto">
+                    <SelectContent className="bg-white z-50 max-h-80 overflow-auto">
                       {filterCategories.map(item => (
-                        <SelectItem key={item.queryKey} value={item.queryKey}>
+                        <SelectItem 
+                          key={item.queryKey} 
+                          value={item.queryKey}
+                          className="hover:bg-primary/10 cursor-pointer py-3"
+                        >
                           {item.label}
                         </SelectItem>
                       ))}
@@ -418,7 +429,7 @@ const FindJobs = () => {
                 {/* No multi-select and no Find Jobs button */}
               </div>
               {/* Applied hint */}
-              <div className="mt-3 text-xs text-muted-foreground">
+              <div className="mt-4 text-sm text-muted-foreground bg-primary/5 px-4 py-2 rounded-lg">
                 {selectedFilter?.queryType === 'education'
                   ? (selectedFilter.queryKey === 'all_jobs' ? 'Showing all jobs' : `Selected: ${selectedFilter.label}`)
                   : selectedFilter ? `Selected: ${selectedFilter.label}` : 'Showing all jobs'}
@@ -432,30 +443,34 @@ const FindJobs = () => {
                 type="button"
                 aria-label="Previous"
                 onClick={scrollPrev}
-                className="hidden lg:flex items-center justify-center w-10 h-10 rounded-full bg-white shadow hover:bg-gray-50 absolute left-0 top-1/2 -translate-y-1/2 z-10"
+                className="hidden lg:flex items-center justify-center w-12 h-12 rounded-full bg-white shadow-md hover:shadow-lg hover:bg-primary/5 hover:border-primary border-2 border-gray-200 transition-all duration-200 absolute left-0 top-1/2 -translate-y-1/2 z-10"
               >
-                <ChevronLeft className="w-5 h-5" />
+                <ChevronLeft className="w-6 h-6 text-foreground" />
               </button>
               <button
                 type="button"
                 aria-label="Next"
                 onClick={scrollNext}
-                className="hidden lg:flex items-center justify-center w-10 h-10 rounded-full bg-white shadow hover:bg-gray-50 absolute right-0 top-1/2 -translate-y-1/2 z-10"
+                className="hidden lg:flex items-center justify-center w-12 h-12 rounded-full bg-white shadow-md hover:shadow-lg hover:bg-primary/5 hover:border-primary border-2 border-gray-200 transition-all duration-200 absolute right-0 top-1/2 -translate-y-1/2 z-10"
               >
-                <ChevronRight className="w-5 h-5" />
+                <ChevronRight className="w-6 h-6 text-foreground" />
               </button>
               <div className="embla w-full" ref={emblaRef}>
-                <div className="flex justify-start space-x-3 py-4">
+                <div className="flex justify-start space-x-4 py-4">
                   {filterCategories.map((c) => {
                     const active = selectedFilter?.queryKey === c.queryKey;
                     return (
                       <button
                         key={c.queryKey}
                         onClick={() => setSelectedFilter(c)}
-                        className={`flex-shrink-0 w-[110px] h-[195.5px] rounded-md overflow-hidden relative border-2 ${active ? 'border-primary' : 'border-transparent'} shadow-sm`}
+                        className={`flex-shrink-0 w-[110px] h-[195.5px] rounded-xl overflow-hidden relative border-3 transition-all duration-300 hover:scale-105 hover:shadow-xl ${
+                          active ? 'border-primary shadow-lg ring-2 ring-primary/30' : 'border-gray-200 hover:border-primary/50 shadow-md'
+                        }`}
                       >
                         <img src={c.imageUrl} alt={c.label} className="w-full h-full object-cover" />
-                        <div className="absolute bottom-0 left-0 right-0 bg-black/40 text-white text-xs p-2 text-center">{c.label}</div>
+                        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent text-white text-xs p-3 text-center font-medium">
+                          {c.label}
+                        </div>
                       </button>
                     );
                   })}
@@ -468,12 +483,16 @@ const FindJobs = () => {
                 <LoadingSpinner />
               </div>
             ) : jobs.length === 0 ? (
-              <div className="text-center py-12 text-muted-foreground">
-                No jobs posted yet. Be the first to post a job!
+              <div className="text-center py-16 animate-fade-in">
+                <div className="bg-white rounded-xl shadow-md p-8 max-w-md mx-auto border-2 border-gray-100">
+                  <p className="text-lg text-muted-foreground font-medium">
+                    No jobs posted yet. Be the first to post a job!
+                  </p>
+                </div>
               </div>
             ) : (
               <>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 animate-fade-in">
                   {jobs.map((job) => (
                     <JobCard
                       key={job.id}
@@ -494,9 +513,14 @@ const FindJobs = () => {
                   ))}
                 </div>
                 {hasMore && (
-                  <div className="flex justify-center mt-8">
-                    <Button onClick={loadMoreJobs} disabled={loadingMore} className="rounded-none">
-                      {loadingMore ? "Loading..." : "Load More"}
+                  <div className="flex justify-center mt-10 animate-fade-in">
+                    <Button 
+                      onClick={loadMoreJobs} 
+                      disabled={loadingMore}
+                      size="lg"
+                      className="px-12 py-6 text-base hover-scale rounded-lg shadow-md hover:shadow-lg transition-all duration-200"
+                    >
+                      {loadingMore ? "Loading..." : "Load More Jobs"}
                     </Button>
                   </div>
                 )}

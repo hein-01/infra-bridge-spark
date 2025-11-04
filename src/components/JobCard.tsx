@@ -151,12 +151,12 @@ export const JobCard = ({
 
   return (
     <>
-  <div className="bg-card border border-border px-4 md:px-6 pb-6 pt-4 shadow-sm relative h-full flex flex-col overflow-hidden">
+  <div className="bg-card border-2 border-border px-4 md:px-6 pb-6 pt-4 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 relative h-full flex flex-col overflow-hidden rounded-xl">
         {/* Report Button */}
         <Button
           variant="destructive"
           onClick={handleReport}
-          className="absolute top-0 right-0 text-[10px] px-2 py-1 h-auto leading-none rounded-none"
+          className="absolute top-0 right-0 text-[10px] px-2 py-1 h-auto leading-none rounded-none hover:bg-destructive/90 transition-colors"
         >
           REPORT THIS JOB
         </Button>
@@ -164,66 +164,71 @@ export const JobCard = ({
         {/* Body (grows to push footer down) */}
         <div className="flex-grow">
           {/* Header */}
-          <div className="mb-3">
+          <div className="mb-4 pt-6">
             <div className="flex-1">
-              <p className="text-xs text-muted-foreground uppercase mb-1">{businessName}</p>
-              <h3 className="text-2xl font-bold text-foreground mb-2">{jobTitleMy}</h3>
-              <p className="text-base font-semibold text-[hsl(var(--primary))]">{salaryDisplay}</p>
+              <p className="text-xs text-muted-foreground uppercase mb-2 tracking-wide">{businessName}</p>
+              <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-2 leading-tight">{jobTitleMy}</h3>
+              <p className="text-base md:text-lg font-semibold text-primary bg-primary/5 inline-block px-3 py-1 rounded-lg">{salaryDisplay}</p>
             </div>
           </div>
 
           {/* Info Tags */}
-          <div className="flex flex-wrap gap-2 mb-3">
-            <Badge variant="secondary" className="bg-muted text-muted-foreground rounded-none">
+          <div className="flex flex-wrap gap-2 mb-4">
+            <Badge variant="secondary" className="bg-muted text-muted-foreground rounded-lg px-3 py-1.5 text-sm hover:bg-muted/80 transition-colors">
               {jobLocationMy}
             </Badge>
-            <Badge variant="secondary" className="bg-muted text-muted-foreground rounded-none">
+            <Badge variant="secondary" className="bg-muted text-muted-foreground rounded-lg px-3 py-1.5 text-sm hover:bg-muted/80 transition-colors">
               {jobType}
             </Badge>
-            <Badge variant="secondary" className="bg-muted text-muted-foreground rounded-none">
+            <Badge variant="secondary" className="bg-muted text-muted-foreground rounded-lg px-3 py-1.5 text-sm hover:bg-muted/80 transition-colors">
               {educationMy}
             </Badge>
           </div>
 
           {/* Age Range */}
           {(ageMin || ageMax) && (
-            <p className="text-xs text-muted-foreground mb-2">
+            <p className="text-sm text-muted-foreground mb-3 font-medium">
               Age: {ageMin} - {ageMax}
             </p>
           )}
 
           {/* Benefits (comma-separated; allow wrapping to avoid overflow) */}
           {(benefitLabelsMy && benefitLabelsMy.length > 0) && (
-            <div className="mb-3">
-              <p className="text-[13px] text-[#4da7a6] whitespace-normal break-words">
+            <div className="mb-4">
+              <p className="text-sm text-[#4da7a6] whitespace-normal break-words font-medium leading-relaxed">
                 {benefitLabelsMy.join(", ")}
               </p>
             </div>
           )}
 
           {/* Deadline and Description Button */}
-          <div className="flex items-center gap-4 mb-2 w-full justify-between">
+          <div className="flex items-center gap-4 mb-2 w-full justify-between flex-wrap">
             <Button
               variant="default"
               onClick={() => setShowDescription(true)}
-              className="bg-foreground text-background rounded-none text-xs h-8 px-3 py-1 leading-none border border-transparent hover:bg-white hover:text-black hover:border-black"
+              className="bg-foreground text-background rounded-lg text-xs md:text-sm h-9 px-4 py-2 leading-none border-2 border-transparent hover:bg-white hover:text-black hover:border-black transition-all duration-200 shadow-sm hover:shadow-md"
             >
               SEE JOB DESCRIPTION
             </Button>
-            <p className="text-sm text-muted-foreground ml-auto">
+            <p className="text-sm text-muted-foreground font-medium">
               Deadline: {new Date(applicationDeadline).toLocaleDateString()}
             </p>
           </div>
         </div>
 
         {/* Apply Section (light lavender background with button on the right) */}
-  <div className="bg-[#f3edfb] text-foreground p-3 md:p-4 -mx-4 md:-mx-6 -mb-6 mt-2">
+  <div className="bg-gradient-to-r from-[#f3edfb] to-[#e8ddf5] text-foreground p-3 md:p-4 -mx-4 md:-mx-6 -mb-6 mt-2 rounded-b-xl">
           <div className="flex items-center justify-between gap-3">
-            <p className="text-[10px] text-[#64748b] m-0 flex-1 break-words">
+            <p className="text-[10px] text-[#64748b] m-0 flex-1 break-words leading-relaxed">
               When ready to apply, please click the button to open the chat with this job poster on Viber.
               Send your CV or ask them anything. (Make sure you have Viber installed!)
             </p>
-            <Button onClick={handleApply} className="rounded-none shrink-0">APPLY</Button>
+            <Button 
+              onClick={handleApply} 
+              className="rounded-lg shrink-0 shadow-md hover:shadow-lg hover-scale text-sm px-6 py-2"
+            >
+              APPLY
+            </Button>
           </div>
         </div>
       </div>
