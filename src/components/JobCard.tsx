@@ -151,7 +151,7 @@ export const JobCard = ({
 
   return (
     <>
-  <div className="bg-card border border-border px-6 pb-6 pt-4 shadow-sm relative h-full flex flex-col">
+  <div className="bg-card border border-border px-4 md:px-6 pb-6 pt-4 shadow-sm relative h-full flex flex-col overflow-hidden">
         {/* Report Button */}
         <Button
           variant="destructive"
@@ -217,7 +217,7 @@ export const JobCard = ({
         </div>
 
         {/* Apply Section (light lavender background with button on the right) */}
-  <div className="bg-[#f3edfb] text-foreground p-4 -mx-6 -mb-6 mt-2">
+  <div className="bg-[#f3edfb] text-foreground p-3 md:p-4 -mx-4 md:-mx-6 -mb-6 mt-2">
           <div className="flex items-center justify-between gap-3">
             <p className="text-xs text-[#64748b] m-0 flex-1 break-words">
               When ready to apply, please click the button to open the chat with this job poster on Viber.

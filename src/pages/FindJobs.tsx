@@ -388,7 +388,7 @@ const FindJobs = () => {
         </div>
 
         {/* Jobs Listing Section */}
-        <div className="container mx-auto px-4 pt-12">
+        <div className="container mx-auto px-4 md:px-6 pt-12">
           <div className="max-w-6xl mx-auto">
             
             {/* Filters Section: Merged dropdown and slider; auto-query on change */}
@@ -473,7 +473,7 @@ const FindJobs = () => {
               </div>
             ) : (
               <>
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                   {jobs.map((job) => (
                     <JobCard
                       key={job.id}
