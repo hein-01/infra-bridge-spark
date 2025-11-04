@@ -219,7 +219,7 @@ export const JobCard = ({
         {/* Apply Section (light lavender background with button on the right) */}
   <div className="bg-[#f3edfb] text-foreground p-3 md:p-4 -mx-4 md:-mx-6 -mb-6 mt-2">
           <div className="flex items-center justify-between gap-3">
-            <p className="text-xs text-[#64748b] m-0 flex-1 break-words">
+            <p className="text-[10px] text-[#64748b] m-0 flex-1 break-words">
               When ready to apply, please click the button to open the chat with this job poster on Viber.
               Send your CV or ask them anything. (Make sure you have Viber installed!)
             </p>
